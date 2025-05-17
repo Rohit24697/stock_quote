@@ -47,11 +47,11 @@ class StockModel {
       open: map['open'] ?? '0',
       high: map['high'] ?? '0',
       low: map['low'] ?? '0',
-      price: map['price']?.toDouble() ?? 0.0,
+      price: map['price'] ?? 0.0,
       volume: map['volume'] ?? '0',
       latestTradingDay: map['latestTradingDay'] ?? '',
       previousClose: map['previousClose'] ?? '0',
-      change: map['change']?.toDouble() ?? 0.0,
+      change: map['change'] ?? 0.0,
       changePercent: map['changePercent'] ?? '',
       sector: map['sector'] ?? 'Unknown',
     );

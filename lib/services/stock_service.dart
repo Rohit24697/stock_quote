@@ -17,7 +17,7 @@ class StockService {
   };
 
   /// Fetch a single stock quote by symbol
-   Future<StockModel?> fetchStockQuote(String symbol, {String sector = 'Unknown'}) async {
+  Future<StockModel?> fetchStockQuote(String symbol, {String sector = 'Unknown'}) async {
     try {
       final String apiUrl =
           '$_baseUrl?function=GLOBAL_QUOTE&symbol=$symbol&apikey=$_apiKey';
@@ -36,12 +36,11 @@ class StockService {
         return null;
       }
 
-      if (data['Global Quote'] == null || data['Global Quote'].isEmpty) {
+      final quote = data['Global Quote'];
+      if (quote == null || quote.isEmpty) {
         debugPrint("No stock data found for symbol: $symbol");
         return null;
       }
-
-      final quote = data['Global Quote'];
 
       return StockModel(
         symbol: quote['01. symbol'] ?? '',
@@ -65,15 +64,26 @@ class StockService {
   /// Fetch list of stock quotes by sector
   Future<List<StockModel>> fetchStocksBySector(String sector) async {
     final List<String> symbols = _sectorSymbols[sector] ?? [];
+
+    if (symbols.isEmpty) {
+      debugPrint("No symbols found for sector: $sector");
+      return [];
+    }
+
     List<StockModel> stocks = [];
 
-    for (String symbol in symbols) {
-      final stock = await fetchStockQuote(symbol, sector: sector);
+    for (int i = 0; i < symbols.length; i++) {
+      final stock = await fetchStockQuote(symbols[i], sector: sector);
+
       if (stock != null) {
         stocks.add(stock);
+      } else {
+        debugPrint("Stock data is null for symbol: ${symbols[i]}");
       }
-      // Delay to avoid API rate limit
-      await Future.delayed(const Duration(seconds: 12));
+
+      if (i < symbols.length - 1) {
+        await Future.delayed(const Duration(seconds: 15)); // Ensure rate limit buffer
+      }
     }
 
     return stocks;
