@@ -4,13 +4,15 @@ Stock Quote App
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This is a Stock Quote App. asked as a assignment task in one of IT company. I tried to figure out the solution.
 
-A few resources to get you started if this is your first Flutter project:
+I have covered below points in this app.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Kotlin, Data binding, View binding, SQLite database, Third party APi, SharedPreferences, watchlist, GetX as State Mangement etc.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![image alt](https://github.com/Rohit24697/stock_quote/blob/main/splashScreen.jpeg?raw=true)
+![image alt](https://github.com/Rohit24697/stock_quote/blob/main/StockGetx_tech.jpeg?raw=true)
+![image alt](https://github.com/Rohit24697/stock_quote/blob/main/StockByCategory.jpeg?raw=true)
+![image alt](https://github.com/Rohit24697/stock_quote/blob/main/Stock_details.jpeg?raw=true)
+![image alt](https://github.com/Rohit24697/stock_quote/blob/main/search_page.jpeg?raw=true)
+![image alt](https://github.com/Rohit24697/stock_quote/blob/main/watchlist.jpeg?raw=true)
