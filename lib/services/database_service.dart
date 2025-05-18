@@ -15,7 +15,7 @@ class DatabaseHelper {
     _database = await _initDB();
     return _database!;
   }
-
+  // Function to create and initialize the local database
   Future<Database> _initDB() async {
     final String path = join(await getDatabasesPath(), 'stock_watchlist.db');
     return await openDatabase(
@@ -42,14 +42,14 @@ class DatabaseHelper {
     );
   }
 
-  // Insert stock into watchlist table (save full stock details)
+  // Function to insert stock into watchlist table
   Future<int> addToWatchlist(StockModel stock) async {
     final db = await database;
     try {
       return await db.insert(
         watchlistTable,
         stock.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.ignore, // avoid duplicates by symbol
+        conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } catch (e) {
       print("Error adding to watchlist: $e");
@@ -57,7 +57,7 @@ class DatabaseHelper {
     }
   }
 
-  // Remove a stock from watchlist by symbol
+  // Function to remove a stock from watchlist by symbol
   Future<int> removeFromWatchlist(String symbol) async {
     final db = await database;
     return await db.delete(
@@ -67,14 +67,14 @@ class DatabaseHelper {
     );
   }
 
-  // Get all stocks in watchlist (full stock details)
+  // Function to get all stocks in watchlist
   Future<List<StockModel>> getWatchlist() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(watchlistTable);
     return List.generate(maps.length, (i) => StockModel.fromMap(maps[i]));
   }
 
-  // Check if stock is in watchlist by symbol
+  // Function to check if stock is in watchlist by symbol
   Future<bool> isStockInWatchlist(String symbol) async {
     final db = await database;
     final List<Map<String, dynamic>> result = await db.query(

@@ -24,21 +24,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Set background color to white
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Display the logo image
             Image.asset("assets/axolotls_logo.jpg"),
-            const SizedBox(height: 20), // Add some space between the logo and text
+            const SizedBox(height: 20),
             const Text(
-              "Developed by Rohit Hegade", // Display developer's name
+              "Developed by Rohit Hegade",
               style: TextStyle(
-                fontSize: 16.0, // Set font size
-                fontWeight: FontWeight.bold, // Make the text bold
-                fontStyle: FontStyle.italic, // Make the text italic
-                color: Colors.blue, // Set text color to yellow
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                color: Colors.blue,
               ),
             ),
           ],

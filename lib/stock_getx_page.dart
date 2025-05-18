@@ -12,6 +12,7 @@ class StockGetxPage extends StatelessWidget {
 
   final StockController stockController = Get.put(StockController());
 
+  // Predefined stock categories with list of stock symbols
   final Map<String, List<String>> categories = {
     'Technology': ['AAPL', 'MSFT', 'GOOGL', 'TSLA', 'NVDA'],
     'Healthcare': ['JNJ', 'PFE', 'MRK', 'ABT', 'UNH'],
@@ -22,12 +23,14 @@ class StockGetxPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Load default category
+    // Set default selected category i.e. Technology
     final String defaultCategory = categories.keys.first;
     stockController.changeCategory(defaultCategory);
 
+    // Obx is observer which rebuilds UI when data changes
     return Obx(() => Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text(
@@ -49,10 +52,12 @@ class StockGetxPage extends StatelessWidget {
           ),
         ],
       ),
+
+      // Main content area
       body: SafeArea(
         child: Column(
           children: [
-            /// CATEGORY SELECTION
+            /// CATEGORY SELECTION SCROLL BAR
             SizedBox(
               height: 50,
               child: SingleChildScrollView(
@@ -60,6 +65,7 @@ class StockGetxPage extends StatelessWidget {
                 child: Row(
                   children: [
                     const SizedBox(width: 8),
+                    // Show each category as a selectable tab
                     ...categories.keys.map((category) {
                       final isSelected = stockController.selectedCategory.value == category;
                       return StockCategory(
@@ -78,15 +84,20 @@ class StockGetxPage extends StatelessWidget {
               ),
             ),
 
-            /// STOCK LIST
+            /// STOCK LIST FOR SELECTED CATEGORY
             Expanded(
               child: Obx(() {
+                // This show loading spinner while data is loading
                 if (stockController.isLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 }
+
+                // Call if no stocks available
                 if (stockController.stockList.isEmpty) {
                   return const Center(child: Text("No stock data available"));
                 }
+
+                // It show list of stocks
                 return ListView.builder(
                   itemCount: stockController.stockList.length,
                   itemBuilder: (context, index) {
@@ -101,6 +112,7 @@ class StockGetxPage extends StatelessWidget {
                       child: StockCard(
                         stock: stock,
                         isWatchlisted: isWatchlisted,
+
                         onToggleWatchlist: () {
                           if (isWatchlisted) {
                             stockController.removeFromWatchlist(stock.symbol);

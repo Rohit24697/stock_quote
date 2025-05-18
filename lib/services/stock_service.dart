@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import '../model/stock_model.dart';
 
 class StockService {
-  static const String _apiKey = 'K2AFZ6MC8DKJ2V5M'; // Replace with your actual API key
+  // static const String _apiKey = 'K2AFZ6MC8DKJ2V5M';
+  static const String _apiKey = 'P40FIATE0BQGBD91';
   static const String _baseUrl = 'https://www.alphavantage.co/query';
 
   // Hardcoded mapping of sector to stock symbols
@@ -16,11 +17,12 @@ class StockService {
     'Consumer Staples': ['PG', 'KO', 'PEP', 'WMT', 'COST'],
   };
 
-  /// Fetch a single stock quote by symbol
+  // Function to fetch a single stock quote by symbol
   Future<StockModel?> fetchStockQuote(String symbol, {String sector = 'Unknown'}) async {
     try {
       final String apiUrl =
           '$_baseUrl?function=GLOBAL_QUOTE&symbol=$symbol&apikey=$_apiKey';
+      print(apiUrl);
 
       final response = await http.get(Uri.parse(apiUrl));
 
@@ -36,7 +38,8 @@ class StockService {
         return null;
       }
 
-      final quote = data['Global Quote'];
+      final quote = data["Global Quote"];
+      print(quote);
       if (quote == null || quote.isEmpty) {
         debugPrint("No stock data found for symbol: $symbol");
         return null;
@@ -61,7 +64,7 @@ class StockService {
     }
   }
 
-  /// Fetch list of stock quotes by sector
+  // Function to fetch list of stock quotes by sector
   Future<List<StockModel>> fetchStocksBySector(String sector) async {
     final List<String> symbols = _sectorSymbols[sector] ?? [];
 
@@ -89,7 +92,7 @@ class StockService {
     return stocks;
   }
 
-  /// Get available sector names
+  // Function to get available sector names
   static List<String> getAvailableSectors() {
     return _sectorSymbols.keys.toList();
   }
