@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import '../model/stock_model.dart';
 
 class StockService {
-  // static const String _apiKey = 'K2AFZ6MC8DKJ2V5M';
-  static const String _apiKey = 'P40FIATE0BQGBD91';
+  static const String _apiKey = 'K2AFZ6MC8DKJ2V5M';
+  // static const String _apiKey = 'P40FIATE0BQGBD91';
   static const String _baseUrl = 'https://www.alphavantage.co/query';
 
   // Hardcoded mapping of sector to stock symbols

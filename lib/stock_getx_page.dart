@@ -85,47 +85,90 @@ class StockGetxPage extends StatelessWidget {
             ),
 
             /// STOCK LIST FOR SELECTED CATEGORY
+            // Expanded(
+            //   child: Obx(() {
+            //     // This show loading spinner while data is loading
+            //     if (stockController.isLoading.value) {
+            //       return const Center(child: CircularProgressIndicator());
+            //     }
+            //
+            //     // Call if no stocks available
+            //     if (stockController.stockList.isEmpty) {
+            //       return const Center(child: Text("No stock data available"));
+            //     }
+            //
+            //     // It show list of stocks
+            //     return ListView.builder(
+            //       itemCount: stockController.stockList.length,
+            //       itemBuilder: (context, index) {
+            //         final stock = stockController.stockList[index];
+            //         final isWatchlisted = stockController.isStockInWatchlist(stock.symbol);
+            //
+            //         return GestureDetector(
+            //           onTap: () {
+            //             Get.to(() => StockDetailPage(), arguments: stock);
+            //           },
+            //
+            //           child: StockCard(
+            //             stock: stock,
+            //             isWatchlisted: isWatchlisted,
+            //
+            //             onToggleWatchlist: () {
+            //               if (isWatchlisted) {
+            //                 stockController.removeFromWatchlist(stock.symbol);
+            //               } else {
+            //                 stockController.addToWatchlist(stock);
+            //               }
+            //             },
+            //           ),
+            //         );
+            //       },
+            //     );
+            //   }),
+            // ),
+
             Expanded(
               child: Obx(() {
-                // This show loading spinner while data is loading
                 if (stockController.isLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                // Call if no stocks available
                 if (stockController.stockList.isEmpty) {
                   return const Center(child: Text("No stock data available"));
                 }
 
-                // It show list of stocks
                 return ListView.builder(
                   itemCount: stockController.stockList.length,
                   itemBuilder: (context, index) {
                     final stock = stockController.stockList[index];
-                    final isWatchlisted = stockController.isStockInWatchlist(stock.symbol);
 
                     return GestureDetector(
                       onTap: () {
                         Get.to(() => StockDetailPage(), arguments: stock);
                       },
 
-                      child: StockCard(
-                        stock: stock,
-                        isWatchlisted: isWatchlisted,
+                      /// Wrap **StockCard** in a nested Obx so the watchlist icon updates reactively
+                      child: Obx(() {
+                        final isWatchlisted = stockController.isStockInWatchlist(stock.symbol);
 
-                        onToggleWatchlist: () {
-                          if (isWatchlisted) {
-                            stockController.removeFromWatchlist(stock.symbol);
-                          } else {
-                            stockController.addToWatchlist(stock);
-                          }
-                        },
-                      ),
+                        return StockCard(
+                          stock: stock,
+                          isWatchlisted: isWatchlisted,
+                          onToggleWatchlist: () {
+                            if (isWatchlisted) {
+                              stockController.removeFromWatchlist(stock.symbol);
+                            } else {
+                              stockController.addToWatchlist(stock);
+                            }
+                          },
+                        );
+                      }),
                     );
                   },
                 );
               }),
-            ),
+            )
+
           ],
         ),
       ),

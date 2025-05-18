@@ -63,17 +63,6 @@ class WatchlistPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Optional: button to remove stock (commented code)
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.end,
-                    //   children: [
-                    //     IconButton(
-                    //       icon: Icon(Icons.remove_circle, color: Colors.red),
-                    //       onPressed: () => stockController.removeFromWatchlist(stock.symbol),
-                    //     ),
-                    //   ],
-                    // ),
-
                     // It shows stock details using custom StockCard widget
                     StockCard(
                       stock: stock,
